@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 
-const PORT = 3002;
+const PORT = 3000;
 
 app.get('/', (req, res) => {
   res.send({ message: 'this message is coming from another container having v2! ' });
