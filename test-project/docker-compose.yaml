@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  nodejs-app-1:
+    image: node-js-app-img
+    container_name: nodejs-app-1
+    restart: always
+    healthcheck:
+      test: ["CMD","curl","-f","http://nodejs-app-1:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "3000:3000"
+    networks:
+      - my_demo_network
+  nodejs-app-2:
+    image: node-js-app-img:v2
+    container_name: nodejs-app-2
+    restart: always
+    healthcheck:
+      test: ["CMD","curl","-f","http://nodejs-app-2:3002"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports: 
+      - "3002:3002"
+    networks:
+      - my_demo_network
+  nodejs-app-3:
+    image: node-js-app-img:v3
+    container_name: nodejs-app-3
+    restart: always
+    healthcheck:
+      test: ["CMD","curl","-f","http://nodejs-app-3:3001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "3001:3001"
+    networks:
+      - my_demo_network
+  nginx-proxy-cont:
+    image: nignx-proxy-image
+    container_name: nginx-proxy-cont
+    ports: 
+      - "80:80"
+    restart: always
+    healthcheck:
+      test: ["CMD","curl","-f","http://nginx-proxy-cont:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - my_demo_network
+networks:
+  my_demo_network: 
+
